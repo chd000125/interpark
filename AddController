@@ -1,0 +1,13 @@
+    // ReservationController.java
+    @PostMapping("/save")
+    public ResponseEntity<?> saveReservation(@RequestBody Map<String, String> body) {
+        String key = body.get("key");
+        reservationService.saveToDatabase(key); // Redis에서 꺼내서 DB 저장
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/cancel")
+    public ResponseEntity<?> cancelReservation(@RequestParam String key) {
+        reservationService.deleteTempData(key); // Redis에서 임시 데이터 제거
+        return ResponseEntity.ok().build();
+    }
