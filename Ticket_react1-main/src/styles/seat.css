@@ -1,0 +1,69 @@
+.seat-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.seat-button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: #ddd;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.seat-button.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+.seat-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.selected-seats {
+    margin-top: 20px;
+}
+
+.selected-seat {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.selected-seat button {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.confirm-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.confirm-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

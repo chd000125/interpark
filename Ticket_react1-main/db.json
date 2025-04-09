@@ -1,0 +1,20 @@
+{
+  "reservations":[
+    {
+      "uName": "홍길동",
+      "uId": 2,
+      "pId": 2,
+      "pTitle": "제목",
+      "pAllSpot": 20,
+      "rId": 1,
+      "pPlace": "대학로",
+      "pDate": "2025-04-07T06:58:00",
+      "pPrice": 10000
+    }
+    
+    
+
+
+  ]
+  
+}

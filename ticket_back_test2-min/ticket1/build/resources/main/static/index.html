@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예매 조회</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+    input, button { margin: 10px; padding: 10px; font-size: 16px; }
+    #result, #allReservations { margin-top: 20px; padding: 10px; border: 1px solid #ddd; display: inline-block; text-align: left; width: 60%; }
+  </style>
+</head>
+<body>
+<h2>예매 조회</h2>
+
+<label for="rId">예약 ID 입력:</label>
+<input type="number" id="rId" placeholder="예약 ID 입력">
+<button onclick="fetchTicket()">예약 조회</button>
+<button onclick="fetchAllReservations()">모든 예약 조회</button>
+
+<div id="result"></div>
+<div id="allReservations"></div>
+
+<script>
+  // 특정 예약 조회
+  function fetchTicket() {
+    const rId = document.getElementById("rId").value;
+    if (!rId) {
+      alert("예약 ID를 입력하세요!");
+      return;
+    }
+
+    fetch(`http://localhost:8787/reservation/${rId}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("서버 응답 실패");
+              }
+              return response.json();
+            })
+            .then(data => {
+              document.getElementById("result").innerHTML = `
+            <h3>예약 정보</h3>
+            <p><strong>티켓 ID:</strong> ${data.tId}</p>
+            <p><strong>이름:</strong> ${data.uName}</p>
+            <p><strong>좌석:</strong> ${data.rSpot}</p>
+            <p><strong>날짜:</strong> ${data.pDate}</p>
+            <p><strong>공연명:</strong> ${data.pTitle}</p>
+            <p><strong>공연장:</strong> ${data.pPlace}</p>
+          `;
+            })
+            .catch(error => {
+              document.getElementById("result").innerHTML = "<p>예약 정보를 찾을 수 없습니다.</p>";
+            });
+  }
+
+  // 모든 예약 조회
+  function fetchAllReservations() {
+    fetch(`http://localhost:8787/reservation/all`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("서버 응답 실패");
+              }
+              return response.json();
+            })
+            .then(data => {
+              let reservationsHtml = "<h3>전체 예약 목록</h3>";
+              if (data.length === 0) {
+                reservationsHtml += "<p>예약된 정보가 없습니다.</p>";
+              } else {
+                reservationsHtml += "<ul>";
+                data.forEach(reservation => {
+                  reservationsHtml += `
+                <li>
+                  <strong>ID:</strong> ${reservation.rId},
+                  <strong>이름:</strong> ${reservation.uName},
+                  <strong>좌석:</strong> ${reservation.rSpot},
+                  <strong>공연명:</strong> ${reservation.pTitle},
+                  <strong>공연장:</strong> ${reservation.pPlace},
+                  <strong>날짜:</strong> ${reservation.pDate}
+                </li>`;
+                });
+                reservationsHtml += "</ul>";
+              }
+              document.getElementById("allReservations").innerHTML = reservationsHtml;
+            })
+            .catch(error => {
+              document.getElementById("allReservations").innerHTML = "<p>예약 정보를 가져올 수 없습니다.</p>";
+            });
+  }
+</script>
+</body>
+</html>
